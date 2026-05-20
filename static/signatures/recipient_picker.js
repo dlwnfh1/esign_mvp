@@ -25,7 +25,9 @@
     </div>
     <div class="recipient-actions">
       <button type="button" class="add-selected">Add</button>
+      <button type="button" class="add-all">Add all</button>
       <button type="button" class="remove-selected">Remove</button>
+      <button type="button" class="remove-all">Clear all</button>
     </div>
     <div class="recipient-column">
       <div class="recipient-column-header">
@@ -98,8 +100,18 @@
     render();
   });
 
+  wrapper.querySelector(".add-all").addEventListener("click", function () {
+    choices.forEach((choice) => selectedIds.add(choice.id));
+    render();
+  });
+
   wrapper.querySelector(".remove-selected").addEventListener("click", function () {
     checkedIds("selected").forEach((id) => selectedIds.delete(id));
+    render();
+  });
+
+  wrapper.querySelector(".remove-all").addEventListener("click", function () {
+    selectedIds.clear();
     render();
   });
 

@@ -102,7 +102,7 @@ class OutgoingEmailSettings(models.Model):
 
 class Customer(models.Model):
     name = models.CharField(max_length=200)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=50, blank=True)
     street = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=100, blank=True)
@@ -117,6 +117,10 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.name} <{self.email}>"
+
+    def save(self, *args, **kwargs):
+        self.email = self.email.strip().lower()
+        super().save(*args, **kwargs)
 
     def full_address(self):
         parts = [self.street, self.city, self.state, self.zip_code]

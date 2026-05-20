@@ -82,6 +82,15 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ["name", "email", "phone", "street", "city", "state", "zip_code", "notes"]
 
+    def clean_email(self):
+        email = self.cleaned_data["email"].strip().lower()
+        existing = Customer.objects.filter(email__iexact=email)
+        if self.instance.pk:
+            existing = existing.exclude(pk=self.instance.pk)
+        if existing.exists():
+            raise forms.ValidationError("A customer with this email already exists.")
+        return email
+
     def clean_phone(self):
         phone = self.cleaned_data.get("phone", "").strip()
         if not phone:

@@ -90,6 +90,7 @@ class CustomerAdmin(admin.ModelAdmin):
                 skipped_rows = []
                 for row_number, row in enumerate(reader, start=2):
                     cleaned = {field: (row.get(field) or "").strip() for field in CUSTOMER_CSV_FIELDS}
+                    cleaned["email"] = cleaned["email"].lower()
                     if not cleaned["name"] or not cleaned["email"]:
                         skipped_rows.append(str(row_number))
                         continue
