@@ -397,7 +397,7 @@ def email_settings(request):
             saved.is_active = True
             saved.save()
             messages.success(request, "Email settings saved.")
-            return redirect("email_settings")
+            return redirect("dashboard")
     else:
         form = OutgoingEmailSettingsForm(instance=email_config)
     return render(request, "signatures/email_settings.html", {"form": form, "email_config": email_config})
