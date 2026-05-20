@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Review Request{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="page-title">
+    <div>
+      <h1>Review Signature Request</h1>
+      <p>{{ signature_request.title }}</p>
+    </div>
+    <span class="status">{{ signature_request.get_status_display }}</span>
+  </div>
+  <div class="review-grid">
+    <div>
+      <h2>Recipients</h2>
+      <p>{{ signature_request.signer_name }}</p>
+      <p>{{ signature_request.signer_email }}</p>
+    </div>
+    <div>
+      <h2>Fields</h2>
+      <p>{{ signature_request.fields|length }} fields saved from the template.</p>
+      <a class="button" href="{% url 'field_designer' signature_request.pk %}">Review field placement</a>
+    </div>
+  </div>
+  {% if signature_request.email_message %}
+    <h2>Email Message</h2>
+    <pre>{{ signature_request.email_message }}</pre>
+  {% endif %}
+  <label>Signing link</label>
+  <input value="{{ sign_url }}" readonly onclick="this.select()">
+  <form method="post" class="actions review-actions">
+    {% csrf_token %}
+    <a class="button" href="{% url 'dashboard' %}">Cancel</a>
+    <button class="primary" type="submit">Send email</button>
+  </form>
+</section>
+{% endblock %}

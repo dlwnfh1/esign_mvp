@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Review Requests{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="page-title">
+    <div>
+      <h1>Review Signature Requests</h1>
+      <p>{{ batch.title }} · each recipient has a separate signing link.</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="button subtle" onclick="history.back()">Back</button>
+      <a class="button" href="{% url 'dashboard' %}">Dashboard</a>
+      <span class="status">{{ rows|length }} requests</span>
+    </div>
+  </div>
+  {% if batch.email_message %}
+    <h2>Email Message</h2>
+    <pre>{{ batch.email_message }}</pre>
+  {% endif %}
+  <table>
+    <thead>
+      <tr>
+        <th>Recipient</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Signing Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.request.signer_name }}</td>
+          <td>{{ row.request.signer_email }}</td>
+          <td><span class="status">{{ row.request.get_status_display }}</span></td>
+          <td><input value="{{ row.sign_url }}" readonly onclick="this.select()"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <form method="post" class="actions review-actions">
+    {% csrf_token %}
+    <a class="button" href="{% url 'dashboard' %}">Cancel</a>
+    <button class="primary" type="submit">Send all emails</button>
+  </form>
+</section>
+{% endblock %}

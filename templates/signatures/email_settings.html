@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Email Settings{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Email Settings</h1>
+  <p>Use this sender account for signature request emails.</p>
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="primary" type="submit">Save email settings</button>
+  </form>
+</section>
+{% endblock %}

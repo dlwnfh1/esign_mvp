@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sign Document{% endblock %}
+{% block content %}
+<div class="signing-layout">
+  <section class="panel document-panel">
+    <div class="page-title">
+      <div>
+        <h1>{{ signature_request.title }}</h1>
+        <p>Review the document before signing.</p>
+      </div>
+      <a class="button" href="{{ document_url }}" target="_blank" rel="noopener">Open PDF</a>
+    </div>
+    <object class="pdf-preview" data="{{ document_url }}" type="application/pdf">
+      <div class="pdf-fallback">
+        <p>The PDF preview could not be displayed in this browser.</p>
+        <a class="button" href="{{ document_url }}" target="_blank" rel="noopener">Open PDF</a>
+      </div>
+    </object>
+  </section>
+
+  <section class="panel sign-panel">
+    <h1>Sign</h1>
+    <p>Your name, date, and signature will be placed into the marked fields in the PDF.</p>
+    <form method="post" class="stack" id="sign-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <p>
+        {{ form.printed_name.label_tag }}
+        {{ form.printed_name }}
+        {{ form.printed_name.errors }}
+      </p>
+      <p>
+        {{ form.signed_date.label_tag }}
+        {{ form.signed_date }}
+        {{ form.signed_date.errors }}
+      </p>
+      <label>Signature</label>
+      <div class="signature-box">
+        <canvas id="signature-pad" width="640" height="220"></canvas>
+      </div>
+      {{ form.signature_data }}
+      <label class="checkline">{{ form.consent }} {{ form.consent.label }}</label>
+      {{ form.consent.errors }}
+      <div class="actions">
+        <button type="button" id="clear-signature">Clear</button>
+        <button class="primary" type="submit">Finish signing</button>
+      </div>
+    </form>
+  </section>
+</div>
+<script src="{% static 'signatures/signature.js' %}"></script>
+{% endblock %}

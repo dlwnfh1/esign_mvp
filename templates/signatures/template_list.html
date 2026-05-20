@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Templates{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Document Templates</h1>
+  <a class="button primary" href="{% url 'template_create' %}">New template</a>
+</div>
+<section class="panel">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Fields</th>
+        <th>Updated</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for template in templates %}
+        <tr>
+          <td>{{ template.name }}<br><span>{{ template.description }}</span></td>
+          <td>{{ template.fields|length }}</td>
+          <td>{{ template.updated_at|date:"M j, Y g:i A" }}</td>
+          <td class="row-actions">
+            <a class="button" href="{% url 'template_field_designer' template.pk %}">Fields</a>
+            <a class="button" href="{% url 'template_update' template.pk %}">Edit</a>
+            <form method="post" action="{% url 'template_delete' template.pk %}">
+              {% csrf_token %}
+              <button type="submit" onclick="return confirm('Delete this template?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">No templates yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

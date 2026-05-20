@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-title">
+  <h1>Signature Requests</h1>
+</div>
+<section class="panel dashboard-controls">
+  <form method="get" class="dashboard-search">
+    <input name="q" value="{{ query }}" placeholder="Search by title, template, customer, email, phone, or address">
+    <button class="primary" type="submit">Search</button>
+    {% if query %}
+      <a class="button subtle" href="{% url 'dashboard' %}">Clear</a>
+    {% endif %}
+    <a class="button primary" href="{% url 'create_request' %}">New request</a>
+  </form>
+</section>
+<section class="panel">
+  <table>
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th>Template</th>
+        <th>Progress</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for batch in batches %}
+        <tr>
+          <td><a href="{% url 'batch_detail' batch.pk %}">{{ batch.title }}</a></td>
+          <td>{{ batch.template.name }}</td>
+          <td><span class="status">{{ batch.completed_count }} / {{ batch.total_count }} completed</span></td>
+          <td>{{ batch.created_at|date:"M j, Y g:i A" }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">No signature requests yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% if legacy_requests %}
+  <section class="panel legacy-panel">
+    <h2>Older Individual Requests</h2>
+    <table>
+      <tbody>
+        {% for item in legacy_requests %}
+          <tr>
+            <td><a href="{% url 'request_detail' item.pk %}">{{ item.title }}</a></td>
+            <td>{{ item.signer_name }}</td>
+            <td><span class="status">{{ item.get_status_display }}</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endif %}
+{% endblock %}

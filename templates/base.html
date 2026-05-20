@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Signature Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'signatures/app.css' %}?v=20260519-3">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{% url 'dashboard' %}">Signature Portal</a>
+    <nav>
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'customer_list' %}">Customers</a>
+        <a href="{% url 'template_list' %}">Templates</a>
+        <a href="{% url 'email_settings' %}">Settings</a>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Log out</button>
+        </form>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="shell">
+    {% for message in messages %}
+      <div class="notice">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

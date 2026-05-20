@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>{{ title }}</h1>
+  <form method="post" enctype="multipart/form-data" class="stack">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="actions">
+      <a class="button" href="{% url 'template_list' %}">Cancel</a>
+      <button class="primary" type="submit">Save template</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

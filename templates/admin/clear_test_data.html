@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div id="content-main">
+  <h1>Clear Test Request Data</h1>
+  <p>This deletes request batches, individual signature requests, and generated request files.</p>
+  <p><strong>Kept:</strong> users, customers, templates, template PDFs, and email settings.</p>
+  <ul>
+    <li>Batches: {{ counts.batches }}</li>
+    <li>Individual requests: {{ counts.requests }}</li>
+  </ul>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class="default" value="Delete test request data">
+    <a href="{% url 'admin:index' %}" class="button cancel-link">Cancel</a>
+  </form>
+</div>
+{% endblock %}

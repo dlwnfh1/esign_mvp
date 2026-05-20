@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Confirm Resend{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <div class="page-title">
+    <div>
+      <h1>Resend Email?</h1>
+      <p>{{ signature_request.title }}</p>
+    </div>
+    <span class="status">{{ signature_request.get_status_display }}</span>
+  </div>
+  <p>This will resend the signing email to:</p>
+  <h2>{{ signature_request.signer_name }}</h2>
+  <p>{{ signature_request.signer_email }}</p>
+  <form method="post" class="actions review-actions">
+    {% csrf_token %}
+    {% if signature_request.batch %}
+      <a class="button" href="{% url 'batch_detail' signature_request.batch.pk %}">Cancel</a>
+    {% else %}
+      <a class="button" href="{% url 'request_detail' signature_request.pk %}">Cancel</a>
+    {% endif %}
+    <button class="action-button resend" type="submit">Confirm resend</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Place Fields{% endblock %}
+{% block content %}
+{{ page_sizes|json_script:"page-sizes-data" }}
+{{ saved_fields|json_script:"fields-data" }}
+<form method="post" id="designer-form">
+  {% csrf_token %}
+  <input type="hidden" name="fields_json" id="fields-json">
+  <div class="designer-layout">
+    <section class="panel designer-document">
+      <div class="page-title">
+        <div>
+          <h1>{{ designer_title }}</h1>
+          <p>{{ designer_subtitle }}</p>
+        </div>
+        <div class="page-controls">
+          <button type="button" class="button subtle" onclick="history.back()">Back</button>
+          <button type="button" id="prev-page">Prev</button>
+          <span id="page-label"></span>
+          <button type="button" id="next-page">Next</button>
+          <span class="control-divider"></span>
+          <button type="button" id="zoom-out">-</button>
+          <button type="button" id="zoom-fit">Fit</button>
+          <button type="button" id="zoom-in">+</button>
+        </div>
+      </div>
+      <div class="designer-stage" id="designer-stage">
+        <div class="page-wrap">
+          <img id="pdf-page-image" alt="PDF page">
+          <div id="field-layer"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel designer-tools">
+      <h1>Fields</h1>
+      <div class="tool-group" role="group" aria-label="Field type">
+        <button type="button" class="tool-button active" draggable="true" data-field-type="signature">Signature</button>
+        <button type="button" class="tool-button" draggable="true" data-field-type="name">Name</button>
+        <button type="button" class="tool-button" draggable="true" data-field-type="date">Date</button>
+      </div>
+      <p class="muted">Drag a field button onto the PDF, or select a field type and drag directly on the page. Click a placed field and press Delete to remove it.</p>
+      <div class="field-list" id="field-list"></div>
+      <button class="primary wide" type="submit">{{ submit_label }}</button>
+    </aside>
+  </div>
+</form>
+<script>
+  window.fieldDesignerConfig = {
+    pageImageBaseUrl: "{{ page_image_base_url }}",
+  };
+</script>
+<script src="{% static 'signatures/field_designer.js' %}?v=20260519-2"></script>
+{% endblock %}

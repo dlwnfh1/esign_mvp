@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Request Detail{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="page-title">
+    <div>
+      <h1>{{ signature_request.title }}</h1>
+      <p>{{ signature_request.signer_name }} · {{ signature_request.signer_email }}</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="button subtle" onclick="history.back()">Back</button>
+      {% if signature_request.batch %}
+        <a class="button" href="{% url 'batch_detail' signature_request.batch.pk %}">Batch</a>
+      {% else %}
+        <a class="button" href="{% url 'dashboard' %}">Dashboard</a>
+      {% endif %}
+      <span class="status">{{ signature_request.get_status_display }}</span>
+    </div>
+  </div>
+  <div class="stack">
+    <a class="action-button details" href="{% url 'field_designer' signature_request.pk %}">Review fields</a>
+    {% if signature_request.signed_pdf %}
+      <a class="action-button view" href="{% url 'open_signed_pdf' signature_request.pk %}" target="_blank" rel="noopener">Open completed PDF</a>
+      <a class="action-button download" href="{% url 'download_signed_pdf' signature_request.pk %}">Download completed PDF</a>
+    {% else %}
+      <a class="action-button resend" href="{% url 'resend_request_email' signature_request.pk %}">Resend email</a>
+    {% endif %}
+  </div>
+  <h2>Audit Log</h2>
+  <pre>{{ signature_request.audit_log|default:"{}" }}</pre>
+</section>
+{% endblock %}

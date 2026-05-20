@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}New Request{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>New Signature Request</h1>
+  <p>Select recipients and choose the template to send.</p>
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="primary" type="submit">Review and send</button>
+  </form>
+</section>
+<script src="{% static 'signatures/recipient_picker.js' %}"></script>
+{% endblock %}

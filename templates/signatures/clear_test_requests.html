@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Clear Test Data{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Clear Test Requests</h1>
+  <p>This deletes only signature request test data and generated request files.</p>
+  <div class="review-grid">
+    <div>
+      <h2>{{ counts.batches }}</h2>
+      <p>Batches</p>
+    </div>
+    <div>
+      <h2>{{ counts.requests }}</h2>
+      <p>Individual requests</p>
+    </div>
+  </div>
+  <p>Kept: customers, templates, email settings, and admin users.</p>
+  <form method="post" class="actions review-actions">
+    {% csrf_token %}
+    <a class="button" href="{% url 'dashboard' %}">Cancel</a>
+    <button class="action-button resend" type="submit" onclick="return confirm('Delete all request test data?')">Delete test requests</button>
+  </form>
+</section>
+{% endblock %}
