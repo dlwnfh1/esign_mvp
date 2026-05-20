@@ -539,6 +539,12 @@ td span {
   color: #1e5e32;
 }
 
+.placed-field.initial {
+  background: rgba(91, 95, 170, 0.07);
+  border-color: #5b5faa;
+  color: #393d86;
+}
+
 .placed-field.date {
   background: rgba(156, 111, 40, 0.07);
   border-color: #9c6f28;

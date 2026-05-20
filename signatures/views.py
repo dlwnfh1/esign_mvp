@@ -473,7 +473,7 @@ def parse_designer_fields(raw_fields, page_sizes):
         if not isinstance(field, dict):
             return [], f"Field {index} is invalid."
         field_type = field.get("type")
-        if field_type not in {"signature", "name", "date"}:
+        if field_type not in {"signature", "name", "date", "initial"}:
             return [], f"Field {index} has an unsupported type."
         try:
             page = int(field.get("page"))
@@ -530,6 +530,7 @@ def sign_request(request, token):
                     signature_request.fields,
                     form.cleaned_data["printed_name"],
                     form.cleaned_data["signed_date"],
+                    form.cleaned_data.get("initials", ""),
                 )
             except Exception:
                 form.add_error(None, "We could not apply the signature to this PDF. Please contact the sender.")
@@ -552,6 +553,7 @@ def sign_request(request, token):
                 "signer_name": form.cleaned_data["printed_name"],
                 "signer_email": signature_request.signer_email,
                 "signed_date": form.cleaned_data["signed_date"].isoformat(),
+                "initials": form.cleaned_data.get("initials", ""),
                 "ip_address": get_client_ip(request),
                 "user_agent": request.META.get("HTTP_USER_AGENT", ""),
                 "consent_text": "I agree to use an electronic signature for this document.",

@@ -35,6 +35,11 @@
         {{ form.signed_date }}
         {{ form.signed_date.errors }}
       </p>
+      <p>
+        {{ form.initials.label_tag }}
+        {{ form.initials }}
+        {{ form.initials.errors }}
+      </p>
       <label>Signature</label>
       <div class="signature-box">
         <canvas id="signature-pad" width="640" height="220"></canvas>

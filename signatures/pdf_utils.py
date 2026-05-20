@@ -69,7 +69,7 @@ def get_text_font_name():
     return TEXT_FONT_NAME
 
 
-def render_signed_pdf(original_file, signature_png_bytes, fields, signer_name, signed_date=None):
+def render_signed_pdf(original_file, signature_png_bytes, fields, signer_name, signed_date=None, initials=""):
     original_file.seek(0)
     reader = PdfReader(original_file)
     writer = PdfWriter()
@@ -102,6 +102,9 @@ def render_signed_pdf(original_file, signature_png_bytes, fields, signer_name, s
                 elif field_type == "name":
                     overlay.setFont(get_text_font_name(), min(14, max(8, h * 0.65)))
                     overlay.drawString(x, y + max(2, h * 0.2), signer_name)
+                elif field_type == "initial":
+                    overlay.setFont(get_text_font_name(), min(14, max(8, h * 0.65)))
+                    overlay.drawString(x, y + max(2, h * 0.2), initials)
 
             overlay.save()
             overlay_buffer.seek(0)

@@ -60,6 +60,7 @@ class CustomerSignatureForm(forms.Form):
         label="Date",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
+    initials = forms.CharField(max_length=20, label="Initials", required=False)
     consent = forms.BooleanField(label="I agree to use an electronic signature for this document.")
     signature_data = forms.CharField(widget=forms.HiddenInput)
 

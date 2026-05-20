@@ -70,6 +70,7 @@
 
   function labelFor(type) {
     if (type === "signature") return "Signature";
+    if (type === "initial") return "Initial";
     if (type === "name") return "Printed Name";
     if (type === "date") return "Date";
     return type;
@@ -77,6 +78,7 @@
 
   function defaultSizeFor(type) {
     if (type === "signature") return { width: 180, height: 48 };
+    if (type === "initial") return { width: 80, height: 28 };
     if (type === "name") return { width: 180, height: 24 };
     if (type === "date") return { width: 120, height: 24 };
     return { width: 140, height: 32 };
@@ -284,7 +286,7 @@
     event.preventDefault();
     event.stopPropagation();
     const droppedType = event.dataTransfer.getData("text/plain") || activeType;
-    if (!["signature", "name", "date"].includes(droppedType)) return;
+    if (!["signature", "initial", "name", "date"].includes(droppedType)) return;
     placeDefaultField(droppedType, pointFromEvent(event));
   }
 
