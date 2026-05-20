@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Home</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+  &rsaquo; <a href="{% url 'admin:signatures_customer_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; Import CSV
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <p>Upload a CSV file with these columns:</p>
+  <pre>name,email,phone,street,city,state,zip_code,notes</pre>
+  <p><strong>name</strong> and <strong>email</strong> are required. Existing customers are updated by email address.</p>
+
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="submit-row">
+      <input type="submit" value="Import CSV" class="default">
+      <a href="{% url 'admin:signatures_customer_changelist' %}" class="closelink">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
