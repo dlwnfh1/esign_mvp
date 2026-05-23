@@ -29,10 +29,10 @@
     <tbody>
       {% for row in rows %}
         <tr>
-          <td>{{ row.request.signer_name }}</td>
-          <td>{{ row.request.signer_email }}</td>
-          <td><span class="status">{{ row.request.get_status_display }}</span></td>
-          <td><input value="{{ row.sign_url }}" readonly onclick="this.select()"></td>
+          <td data-label="Recipient">{{ row.request.signer_name }}</td>
+          <td data-label="Email">{{ row.request.signer_email }}</td>
+          <td data-label="Status"><span class="status">{{ row.request.get_status_display }}</span></td>
+          <td data-label="Signing Link"><input value="{{ row.sign_url }}" readonly onclick="this.select()"></td>
         </tr>
       {% endfor %}
     </tbody>

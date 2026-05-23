@@ -27,10 +27,10 @@
     <tbody>
       {% for batch in batches %}
         <tr>
-          <td><a href="{% url 'batch_detail' batch.pk %}">{{ batch.title }}</a></td>
-          <td>{{ batch.template.name }}</td>
-          <td><span class="status">{{ batch.completed_count }} / {{ batch.total_count }} completed</span></td>
-          <td>{{ batch.created_at|date:"M j, Y g:i A" }}</td>
+          <td data-label="Request"><a href="{% url 'batch_detail' batch.pk %}">{{ batch.title }}</a></td>
+          <td data-label="Template">{{ batch.template.name }}</td>
+          <td data-label="Progress"><span class="status">{{ batch.completed_count }} / {{ batch.total_count }} completed</span></td>
+          <td data-label="Created">{{ batch.created_at|date:"M j, Y g:i A" }}</td>
         </tr>
       {% empty %}
         <tr><td colspan="4">No signature requests yet.</td></tr>
@@ -45,9 +45,9 @@
       <tbody>
         {% for item in legacy_requests %}
           <tr>
-            <td><a href="{% url 'request_detail' item.pk %}">{{ item.title }}</a></td>
-            <td>{{ item.signer_name }}</td>
-            <td><span class="status">{{ item.get_status_display }}</span></td>
+            <td data-label="Request"><a href="{% url 'request_detail' item.pk %}">{{ item.title }}</a></td>
+            <td data-label="Recipient">{{ item.signer_name }}</td>
+            <td data-label="Status"><span class="status">{{ item.get_status_display }}</span></td>
           </tr>
         {% endfor %}
       </tbody>

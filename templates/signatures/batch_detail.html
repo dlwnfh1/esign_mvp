@@ -37,11 +37,11 @@
     <tbody>
       {% for item in requests %}
         <tr>
-          <td>{{ item.signer_name }}</td>
-          <td>{{ item.signer_email }}</td>
-          <td><span class="status">{{ item.get_status_display }}</span></td>
-          <td>{{ item.completed_at|date:"M j, Y g:i A"|default:"" }}</td>
-          <td class="row-actions">
+          <td data-label="Recipient">{{ item.signer_name }}</td>
+          <td data-label="Email">{{ item.signer_email }}</td>
+          <td data-label="Status"><span class="status">{{ item.get_status_display }}</span></td>
+          <td data-label="Completed">{{ item.completed_at|date:"M j, Y g:i A"|default:"" }}</td>
+          <td data-label="Actions" class="row-actions">
             {% if item.signed_pdf %}
               <a class="action-button view" href="{% url 'open_signed_pdf' item.pk %}" target="_blank" rel="noopener">Open PDF</a>
               <a class="action-button download" href="{% url 'download_signed_pdf' item.pk %}">Download PDF</a>

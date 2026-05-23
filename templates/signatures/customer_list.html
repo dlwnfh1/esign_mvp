@@ -23,11 +23,11 @@
     <tbody>
       {% for customer in customers %}
         <tr>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone|default:"" }}</td>
-          <td>{{ customer.full_address }}</td>
-          <td class="row-actions">
+          <td data-label="Name">{{ customer.name }}</td>
+          <td data-label="Email">{{ customer.email }}</td>
+          <td data-label="Phone">{{ customer.phone|default:"" }}</td>
+          <td data-label="Address">{{ customer.full_address }}</td>
+          <td data-label="Actions" class="row-actions">
             <a class="button" href="{% url 'customer_update' customer.pk %}">Edit</a>
             <form method="post" action="{% url 'customer_delete' customer.pk %}">
               {% csrf_token %}

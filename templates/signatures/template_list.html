@@ -18,10 +18,10 @@
     <tbody>
       {% for template in templates %}
         <tr>
-          <td>{{ template.name }}<br><span>{{ template.description }}</span></td>
-          <td>{{ template.fields|length }}</td>
-          <td>{{ template.updated_at|date:"M j, Y g:i A" }}</td>
-          <td class="row-actions">
+          <td data-label="Name">{{ template.name }}<br><span>{{ template.description }}</span></td>
+          <td data-label="Fields">{{ template.fields|length }}</td>
+          <td data-label="Updated">{{ template.updated_at|date:"M j, Y g:i A" }}</td>
+          <td data-label="Actions" class="row-actions">
             <a class="button" href="{% url 'template_field_designer' template.pk %}">Fields</a>
             <a class="button" href="{% url 'template_update' template.pk %}">Edit</a>
             <form method="post" action="{% url 'template_delete' template.pk %}">
